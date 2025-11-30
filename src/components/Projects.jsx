@@ -22,7 +22,7 @@ export default function Projects() {
         gradient: "from-orange-400 to-blue-500"
       },
       architecture: "#",
-      code: "#"
+      code: "https://github.com/Smilin01/aws-infra-automation.git"
     },
     {
       id: 2,
@@ -37,7 +37,7 @@ export default function Projects() {
         gradient: "from-purple-500 to-blue-500"
       },
       architecture: "#",
-      code: "#"
+      code: "https://github.com/Smilin01/serverless-image-pipeline.git"
     },
     {
       id: 3,
@@ -52,7 +52,7 @@ export default function Projects() {
         gradient: "from-cyan-500 to-teal-500"
       },
       architecture: "#",
-      code: "#"
+      code: "https://github.com/Smilin01/k8s-microservice-deployment.git"
     }
   ];
 

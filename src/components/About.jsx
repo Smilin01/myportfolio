@@ -1,9 +1,8 @@
- 
 import { motion } from 'framer-motion';
 
 export default function About() {
   return (
-    <div className="px-5 lg:px-28 flex justify-between flex-col lg:flex-row" id="about">
+    <div className="px-5 lg:px-28 flex justify-between flex-col lg:flex-row mb-20 lg:mb-32" id="about">
       <motion.div
         className="lg:w-1/2"
         initial={{ opacity: 0, x: -50 }}
@@ -26,15 +25,15 @@ export default function About() {
         </h2>
 
         <p className="text-[#71717A] text-sm/6 lg:text-base mt-5 lg:mt-10">
-          I&apos;m a passionate full-stack developer specializing in **React.js & Node.js**. I thrive on blending technical expertise with sleek UI/UX design to build high-performing, user-friendly applications.
+          I'm a <strong>DevOps Engineer</strong> passionate about automating infrastructure and optimizing cloud workflows. I specialize in building resilient <strong>CI/CD pipelines</strong>, managing <strong>Kubernetes clusters</strong>, and implementing <strong>Infrastructure as Code (IaC)</strong> to ensure scalability and reliability.
         </p>
 
         <p className="text-[#71717A] text-sm/6 lg:text-base mt-3 lg:mt-5">
-          My web development journey started in **2015**, and since then, I&apos;ve continuously evolved, taking on new challenges and keeping up with the latest technologies. Today, I build **cutting-edge web applications** using **Next.js, TypeScript, NestJS, TailwindCSS, Supabase, and more**.
+          With a strong foundation in <strong>AWS, Docker, and Python</strong>, I focus on solving complex operational challenges. From reducing deployment times by <strong>70%</strong> to cutting cloud costs by <strong>$15K/month</strong>, my goal is to bridge the gap between development and operations with efficient, automated solutions.
         </p>
 
         <p className="text-[#71717A] text-sm/6 lg:text-base mt-3 lg:mt-5">
-          Beyond coding, I enjoy sharing insights on **Twitter**, engaging with **Indie Hackers**, and following the journey of **early-stage startups**. Feel free to follow me on **Twitter** or check out my projects on **GitHub**.
+          When I'm not writing <strong>Terraform</strong> scripts or debugging pipelines, I enjoy exploring new cloud-native technologies and contributing to the open-source community. Check out my work on <strong>GitHub</strong> or connect with me to discuss how we can streamline your infrastructure.
         </p>
       </motion.div>
     </div>

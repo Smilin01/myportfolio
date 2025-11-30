@@ -56,10 +56,16 @@ export default function Contact() {
               </motion.button>
 
               <div className='flex items-center gap-x-2 lg:gap-x-5'>
-                {[BiLogoGmail, IoLogoLinkedin, IoLogoTwitter, BsGithub].map((Icon, index) => (
+                {[
+                  { Icon: BiLogoGmail, link: "mailto:johnsmilin0@gmail.com" },
+                  { Icon: IoLogoLinkedin, link: "https://www.linkedin.com/in/johnsmilin/" },
+                  { Icon: BsGithub, link: "https://github.com/smilin01" }
+                ].map(({ Icon, link }, index) => (
                   <motion.a
                     key={index}
-                    href="#"
+                    href={link}
+                    target={link.startsWith("http") ? "_blank" : "_self"}
+                    rel={link.startsWith("http") ? "noopener noreferrer" : ""}
                     className="bg-white p-2 lg:p-3 rounded border-2 border-black"
                     whileHover={{ scale: 1.1, backgroundColor: "#000", color: "#fff" }}
                     whileTap={{ scale: 0.9 }}

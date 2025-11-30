@@ -65,7 +65,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
         >
-          {["about", "toolbox", "projects", "contact"].map((section) => (
+          {["toolbox", "about", "automate", "projects", "contact"].map((section) => (
             <motion.button
               key={section}
               onClick={() => scrollToSection(section)}
@@ -85,7 +85,8 @@ export default function Navbar() {
 
         {/* Resume Button - Separate, positioned on the right */}
         <motion.a
-          href=""
+          href="/assets/resume.pdf"
+          download="John_Smilin_Resume.pdf"
           className="hidden lg:block absolute right-0 px-4 py-2 font-medium group"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -125,7 +126,7 @@ export default function Navbar() {
               <HiX />
             </button>
             <ul className="flex flex-col items-start ml-16 mt-28 h-full gap-y-6 font-semibold">
-              {["about", "toolbox", "projects", "contact"].map((section) => (
+              {["toolbox", "about", "automate", "projects", "contact"].map((section) => (
                 <motion.li
                   key={section}
                   className="border-b"
@@ -137,7 +138,8 @@ export default function Navbar() {
                 </motion.li>
               ))}
               <motion.a
-                href=""
+                href="/assets/resume.pdf"
+                download="John_Smilin_Resume.pdf"
                 className="relative inline-block px-4 py-2 font-semibold group"
                 whileHover={{ scale: 1.1 }}
               >

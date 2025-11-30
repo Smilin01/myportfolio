@@ -129,7 +129,7 @@ export default function Home() {
                 <BsGithub className="w-5 h-5 lg:w-6 lg:h-6" />
               </motion.a>
               <motion.a
-                href="https://www.linkedin.com/in/"
+                href="https://www.linkedin.com/in/johnsmilin/"
                 className="bg-white p-3 lg:p-4 rounded-2xl border-2 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]"
                 whileHover={{ scale: 1.1, rotate: -5 }}
                 whileTap={{ scale: 0.95 }}

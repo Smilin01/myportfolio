@@ -416,7 +416,7 @@ export default function DevOpsFlows() {
     const FlowIcon = flows[activeFlow].icon;
 
     return (
-        <div className="min-h-screen pt-32 pb-20 px-5 lg:px-28 relative overflow-hidden" id="devops">
+        <div className="min-h-screen pt-32 pb-20 px-5 lg:px-28 relative overflow-hidden" id="automate">
             {/* Animated Grid Background */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
@@ -484,8 +484,8 @@ export default function DevOpsFlows() {
                                     setActiveStep(0);
                                 }}
                                 className={`px-6 py-3 rounded-2xl border-2 border-black font-semibold transition-all ${activeFlow === index
-                                        ? 'bg-black text-white shadow-[4px_4px_0_0_rgba(0,0,0,1)]'
-                                        : 'bg-white text-black shadow-[4px_4px_0_0_rgba(0,0,0,0.2)]'
+                                    ? 'bg-black text-white shadow-[4px_4px_0_0_rgba(0,0,0,1)]'
+                                    : 'bg-white text-black shadow-[4px_4px_0_0_rgba(0,0,0,0.2)]'
                                     }`}
                                 whileHover={{ scale: 1.05, rotate: activeFlow === index ? 0 : -2 }}
                                 whileTap={{ scale: 0.95 }}
@@ -533,8 +533,8 @@ export default function DevOpsFlows() {
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: idx * 0.1 }}
                                             className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all group cursor-pointer ${activeStep === idx
-                                                    ? 'bg-black text-white border-black'
-                                                    : 'bg-gray-50 border-gray-200 hover:border-black'
+                                                ? 'bg-black text-white border-black'
+                                                : 'bg-gray-50 border-gray-200 hover:border-black'
                                                 }`}
                                             whileHover={{ x: 5 }}
                                         >
@@ -588,9 +588,9 @@ export default function DevOpsFlows() {
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ duration: 0.2 }}
                                             className={`mb-2 ${line?.type === 'command' ? 'text-green-400 font-semibold' :
-                                                    line?.type === 'success' ? 'text-blue-400' :
-                                                        line?.type === 'emoji' ? 'text-yellow-400 font-bold text-lg' :
-                                                            'text-gray-300'
+                                                line?.type === 'success' ? 'text-blue-400' :
+                                                    line?.type === 'emoji' ? 'text-yellow-400 font-bold text-lg' :
+                                                        'text-gray-300'
                                                 }`}
                                         >
                                             {line?.text || ''}

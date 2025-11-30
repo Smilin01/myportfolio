@@ -2,8 +2,12 @@ import { motion } from "framer-motion";
 import { FaAws, FaDocker, FaPython } from "react-icons/fa";
 import { SiKubernetes, SiAnsible } from "react-icons/si";
 import { BiGitBranch } from "react-icons/bi";
+import { useState } from "react";
+import ProjectArchitecture from "./ProjectArchitecture";
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const projects = [
     {
       id: 1,
@@ -323,9 +327,9 @@ export default function Projects() {
 
                   {/* CTA Buttons */}
                   <div className="flex gap-3">
-                    <motion.a
-                      href={project.architecture}
-                      className="flex-1 px-4 py-2 rounded-xl border-2 border-black font-semibold text-center text-sm text-white"
+                    <motion.button
+                      onClick={() => setSelectedProject(project)}
+                      className="flex-1 px-4 py-2 rounded-xl border-2 border-black font-semibold text-center text-sm text-white cursor-pointer"
                       style={{
                         background: `linear-gradient(135deg, ${project.colors.primary}, ${project.colors.secondary})`
                       }}
@@ -336,10 +340,10 @@ export default function Projects() {
                       whileTap={{ scale: 0.95 }}
                     >
                       View Architecture
-                    </motion.a>
+                    </motion.button>
                     <motion.a
                       href={project.code}
-                      className="flex-1 px-4 py-2 rounded-xl bg-white border-2 border-black font-semibold text-center text-sm"
+                      className="flex-1 px-4 py-2 rounded-xl bg-white border-2 border-black font-semibold text-center text-sm flex items-center justify-center"
                       whileHover={{
                         scale: 1.05,
                         backgroundColor: '#f3f4f6'
@@ -356,6 +360,12 @@ export default function Projects() {
           ))}
         </div>
       </div>
+
+      {/* Architecture Modal */}
+      <ProjectArchitecture
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </div>
   );
 }

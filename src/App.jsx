@@ -1,4 +1,5 @@
 import Home from './pages/Home'
+import About from './components/About'
 import Skills from './components/Skills'
 import Navbar from './components/Navbar'
 import DevOpsFlows from './components/DevOpsFlows'
@@ -14,6 +15,7 @@ export default function App() {
       <Navbar />
       <Home />
       <Skills />
+      <About />
       <DevOpsFlows />
       <Projects />
       <Contact />

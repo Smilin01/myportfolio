@@ -81,7 +81,7 @@ export default function Home() {
             }}
           >
             <motion.h1
-              className="text-3xl lg:text-5xl xl:text-6xl font-extrabold mb-4 lg:mb-6 text-center lg:text-left"
+              className="text-5xl lg:text-5xl xl:text-6xl font-extrabold mb-4 lg:mb-6 text-center lg:text-left"
               style={{ fontFamily: "'Playfair Display', serif" }}
               variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
             >
@@ -89,25 +89,25 @@ export default function Home() {
             </motion.h1>
 
             <motion.p
-              className="text-[#71717A] text-base lg:text-lg xl:text-xl mb-6 lg:mb-8 text-center lg:text-left"
+              className="text-[#71717A] text-xl lg:text-lg xl:text-xl mb-6 lg:mb-8 text-center lg:text-left"
               variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
             >
               Hi, I&apos;m John Smilin. I build CI/CD pipelines and scalable cloud infrastructure.
             </motion.p>
 
             <motion.div
-              className="flex flex-wrap justify-center lg:justify-start gap-3 lg:gap-4 text-base lg:text-xl mb-8 lg:mb-10"
+              className="flex flex-wrap justify-center lg:justify-start gap-3 lg:gap-4 text-lg lg:text-xl mb-8 lg:mb-10"
               variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
             >
               <motion.span
-                className="px-4 py-2 rounded-2xl bg-black text-white border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] font-semibold"
+                className="px-6 py-3 lg:px-4 lg:py-2 rounded-2xl bg-black text-white border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] font-semibold"
                 whileHover={{ scale: 1.05, rotate: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
                 DevOps Engineer
               </motion.span>
               <motion.span
-                className="px-4 py-2 rounded-2xl bg-white text-black border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] font-semibold"
+                className="px-6 py-3 lg:px-4 lg:py-2 rounded-2xl bg-white text-black border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] font-semibold"
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -140,7 +140,7 @@ export default function Home() {
           </motion.div>
 
           {/* Right Side - Rotating Icons Circle */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center justify-center order-2 lg:order-2">
+          <div className="hidden lg:flex w-full lg:w-1/2 flex-col items-center justify-center order-2 lg:order-2">
             <div className="relative w-[300px] h-[300px] lg:w-[350px] lg:h-[350px] pointer-events-none">
               {devopsIcons.map((item, index) => {
                 const totalIcons = devopsIcons.length;

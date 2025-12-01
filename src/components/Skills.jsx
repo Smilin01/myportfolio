@@ -16,7 +16,7 @@ export default function Skills() {
   ]);
 
   return (
-    <div className="mt-3 lg:mt-16 mb-32 lg:mb-48" id="toolbox">
+    <div className="mt-3 lg:mt-16 pb-12 lg:pb-24" id="toolbox">
       <div className="px-5 lg:px-28">
 
         <motion.h2

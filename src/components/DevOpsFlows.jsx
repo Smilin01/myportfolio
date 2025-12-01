@@ -416,7 +416,7 @@ export default function DevOpsFlows() {
     const FlowIcon = flows[activeFlow].icon;
 
     return (
-        <div className="min-h-screen pt-32 pb-20 px-5 lg:px-28 relative overflow-hidden" id="automate">
+        <div className="min-h-screen pt-12 lg:pt-24 pb-20 px-5 lg:px-28 relative overflow-hidden" id="automate">
             {/* Animated Grid Background */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{

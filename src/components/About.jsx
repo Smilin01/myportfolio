@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function About() {
   return (
-    <div className="px-5 lg:px-28 flex justify-between flex-col lg:flex-row mb-20 lg:mb-32" id="about">
+    <div className="px-5 lg:px-28 flex justify-between flex-col lg:flex-row py-12 lg:py-24" id="about">
       <motion.div
         className="lg:w-1/2"
         initial={{ opacity: 0, x: -50 }}

@@ -73,7 +73,7 @@ npm run preview
 **John Smilin DS**
 - Email: johnsmilin6@gmail.com
 - GitHub: [@Smilin01](https://github.com/Smilin01)
-- LinkedIn: [Connect with me](https://www.linkedin.com/in/)
+- LinkedIn: [Connect with me](https://www.linkedin.com/in/johnsmilin/)
 
 ## 📄 License
 

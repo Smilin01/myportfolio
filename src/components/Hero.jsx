@@ -1,30 +1,67 @@
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { profile } from "../data/content";
+import HeroGraph from "./HeroGraph";
+
+const words = ["AI", "agents,", "built", "to", "ship."];
 
 export default function Hero() {
   return (
-    <section id="top" className="pt-16 sm:pt-24 pb-14 border-b border-neutral-200">
-      <p className="text-sm text-neutral-500 mb-5">
-        {profile.role} at {profile.company}
-      </p>
-      <h1 className="font-serif font-bold text-[2.5rem] sm:text-[3.5rem] leading-[1.1] tracking-tight">
-        {profile.headline}
-      </h1>
-      <p className="font-serif text-xl sm:text-[1.35rem] leading-relaxed text-neutral-600 mt-7">
-        {profile.intro}
-      </p>
-      <div className="flex flex-wrap items-center gap-4 mt-9 text-sm">
-        <a
-          href="#contact"
-          className="rounded-full bg-black text-white px-5 py-2.5 hover:bg-neutral-700 transition-colors"
+    <section id="top" className="border-b border-ink">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:py-24 grid md:grid-cols-[1.25fr_1fr] gap-10 items-center">
+        <div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="text-sm text-neutral-600 mb-6"
+          >
+            {profile.name} · {profile.role} at {profile.company}
+          </motion.p>
+          <h1 className="font-serif font-medium tracking-[-0.035em] leading-[0.98] text-[clamp(3.4rem,10vw,7.5rem)]">
+            {words.map((w, i) => (
+              <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.22em]">
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: "105%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.15 + i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {w}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75, duration: 0.7 }}
+            className="text-xl md:text-2xl text-neutral-700 mt-8 max-w-xl leading-snug"
+          >
+            {profile.intro}
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.7 }}
+            className="flex flex-wrap gap-3 mt-9"
+          >
+            <a href="#how" className="rounded-full bg-ink text-white px-7 py-3.5 text-lg hover:bg-neutral-700 transition-colors">
+              See how it works
+            </a>
+            <Link to="/blog" className="rounded-full border border-ink px-7 py-3.5 text-lg hover:bg-ink hover:text-white transition-colors">
+              Read the blog
+            </Link>
+          </motion.div>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-md w-full mx-auto"
         >
-          Get in touch
-        </a>
-        <a href={profile.github} className="text-neutral-600 hover:text-black underline underline-offset-4">
-          GitHub
-        </a>
-        <a href={profile.linkedin} className="text-neutral-600 hover:text-black underline underline-offset-4">
-          LinkedIn
-        </a>
+          <HeroGraph />
+        </motion.div>
       </div>
     </section>
   );

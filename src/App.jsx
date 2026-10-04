@@ -1,25 +1,36 @@
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Work from "./components/Work";
-import Skills from "./components/Skills";
-import Earlier from "./components/Earlier";
-import Contact from "./components/Contact";
-import { profile } from "./data/content";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Blog from "./pages/Blog";
+import Post from "./pages/Post";
+
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      // wait a tick so the target section has mounted
+      const t = setTimeout(() => document.querySelector(hash)?.scrollIntoView(), 50);
+      return () => clearTimeout(t);
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+}
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white text-neutral-900 font-sans">
+    <div className="min-h-screen font-sans">
+      <ScrollManager />
       <Header />
-      <main className="mx-auto max-w-[700px] px-5">
-        <Hero />
-        <Work />
-        <Skills />
-        <Earlier />
-        <Contact />
-      </main>
-      <footer className="mx-auto max-w-[700px] px-5 py-10 text-sm text-neutral-500 border-t border-neutral-200">
-        © {new Date().getFullYear()} {profile.name}
-      </footer>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<Post />} />
+        <Route path="*" element={<Blog />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }

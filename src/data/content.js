@@ -6,7 +6,7 @@ export const profile = {
   github: "https://github.com/Smilin01",
   linkedin: "https://www.linkedin.com/in/johnsmilin/",
   resume: "/assets/resume.pdf",
-  headline: "I build AI agents that plan, research and ship real software.",
+  headline: "AI agents, built to ship.",
   intro:
     "I'm an AI Engineer at Atos. I design multi-agent systems, retrieval pipelines and LLM-powered products, and I care about the unglamorous parts that make them reliable: orchestration, evaluation and observability. Before AI, I spent my time in DevOps, which is why I still treat every agent like a production service.",
 };
@@ -39,7 +39,7 @@ export const projects = [
       "Streaming answers with inline citations",
     ],
     stack: ["RAG", "LLMs", "Vector search", "Streaming"],
-    link: "https://github.com/Smilin01",
+    link: "https://github.com/Smilin01/aetheron",
     linkLabel: "View on GitHub",
   },
   {

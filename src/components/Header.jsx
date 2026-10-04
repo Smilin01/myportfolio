@@ -1,29 +1,32 @@
+import { Link, NavLink } from "react-router-dom";
 import { profile } from "../data/content";
 
 const links = [
-  ["Work", "#work"],
-  ["Skills", "#skills"],
-  ["Earlier", "#earlier"],
-  ["Contact", "#contact"],
+  ["Work", "/#work"],
+  ["Skills", "/#skills"],
+  ["Contact", "/#contact"],
 ];
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-neutral-200">
-      <div className="mx-auto max-w-[700px] px-5 h-14 flex items-center justify-between">
-        <a href="#top" className="font-serif font-bold text-xl tracking-tight">
-          {profile.name.split(" ").slice(0, 2).join(" ")}
-        </a>
-        <nav className="flex items-center gap-5 text-sm text-neutral-600">
-          {links.map(([label, href]) => (
-            <a key={href} href={href} className="hidden sm:inline hover:text-black transition-colors">
+    <header className="sticky top-0 z-30 bg-cream/90 backdrop-blur border-b border-ink">
+      <div className="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between">
+        <Link to="/" className="font-serif font-bold text-2xl tracking-tight">
+          Smilin<span className="text-leaf">.</span>
+        </Link>
+        <nav className="flex items-center gap-6 text-sm">
+          {links.map(([label, to]) => (
+            <Link key={to} to={to} className="hidden md:inline text-neutral-700 hover:text-ink transition-colors">
               {label}
-            </a>
+            </Link>
           ))}
-          <a
-            href={profile.resume}
-            className="rounded-full bg-black text-white px-4 py-1.5 hover:bg-neutral-700 transition-colors"
+          <NavLink
+            to="/blog"
+            className={({ isActive }) => `transition-colors ${isActive ? "text-ink font-medium" : "text-neutral-700 hover:text-ink"}`}
           >
+            Blog
+          </NavLink>
+          <a href={profile.resume} className="rounded-full bg-ink text-white px-4 py-2 hover:bg-neutral-700 transition-colors">
             Resume
           </a>
         </nav>

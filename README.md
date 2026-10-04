@@ -1,19 +1,25 @@
 # John Smilin DS — Portfolio
 
-A minimal, Medium-style portfolio for an AI Engineer: a single reading column, serif typography and no decoration.
+An AI-engineer portfolio with a scroll-driven landing page and a Medium-style blog.
+
+- **Landing:** animated hero, a sticky scroll-through of the six-agent coding pipeline (LLM flow diagram), projects, skills, writing, contact.
+- **Blog:** `/blog` list and `/blog/:slug` posts, styled after Medium.
 
 ## Stack
 
-React 19, Vite, Tailwind CSS, EmailJS (contact form).
+React 19, Vite, Tailwind CSS, Framer Motion, React Router, EmailJS (contact form).
 
 ## Edit content
 
-All text lives in `src/data/content.js` (profile, projects, skills, earlier work).
+- Profile, projects, skills: `src/data/content.js`
+- Blog posts: `src/data/posts.js` (add an object; block types `p`, `h2`, `quote`, `ul`, `code`)
 
 ## Run
 
 ```bash
 npm install
-npm run dev      # local dev server
-npm run build    # production build
+npm run dev
+npm run build
 ```
+
+`public/_redirects` makes client-side routes work on Netlify.

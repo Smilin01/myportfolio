@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { projects } from "../data/content";
 import Reveal from "./Reveal";
 import AnswerDemo from "./AnswerDemo";
@@ -24,6 +25,9 @@ export default function Work() {
                   {p.stack.map((s) => <span key={s} className="rounded-full bg-white border border-neutral-300 text-sm px-3 py-1">{s}</span>)}
                 </div>
                 {p.title === "Aetheron" && <div className="mt-8 max-w-2xl"><AnswerDemo /></div>}
+                {p.post && (
+                  <Link to={`/blog/${p.post}`} className="inline-block mt-6 mr-6 text-leaf hover:underline underline-offset-4">{p.postLabel ?? "Read the write-up"} →</Link>
+                )}
                 {p.link && (
                   <a href={p.link} className="inline-block mt-6 text-leaf hover:underline underline-offset-4">{p.linkLabel} →</a>
                 )}

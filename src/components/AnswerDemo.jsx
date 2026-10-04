@@ -10,7 +10,7 @@ const demos = {
     sources: ["Paper", "Guide", "Docs"],
   },
 };
-const stages = ["Rewriting the query", "Searching the web", "Reading and ranking sources", "Writing the answer"];
+const stages = ["Rewriting the query", "Searching the web (SearXNG)", "Reading pages (Jina Reader)", "Scoring passages", "Writing the answer"];
 
 export default function AnswerDemo() {
   const [q, setQ] = useState(null);
@@ -19,12 +19,12 @@ export default function AnswerDemo() {
 
   useEffect(() => {
     if (!q) return;
-    const timers = [0, 1, 2, 3].map((i) => setTimeout(() => setStage(i), i * 900));
+    const timers = [0, 1, 2, 3, 4].map((i) => setTimeout(() => setStage(i), i * 900));
     return () => timers.forEach(clearTimeout);
   }, [q]);
 
   useEffect(() => {
-    if (stage !== 3 || !q) return;
+    if (stage !== 4 || !q) return;
     const total = demos[q].answer.length;
     const id = setInterval(() => setChars((c) => (c >= total ? (clearInterval(id), c) : c + 2)), 18);
     return () => clearInterval(id);
@@ -59,7 +59,7 @@ export default function AnswerDemo() {
               </li>
             ))}
           </ol>
-          {stage === 3 && (
+          {stage === 4 && (
             <div>
               <p className="font-serif text-lg leading-relaxed min-h-[7rem]">{demo.answer.slice(0, chars)}<span className="opacity-40">{chars < demo.answer.length ? "▍" : ""}</span></p>
               {chars >= demo.answer.length && (

@@ -2,11 +2,20 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { posts, formatDate } from "../data/posts";
 import { profile } from "../data/content";
+import { diagrams } from "../components/blog/Diagrams";
 
 function Block({ b }) {
   switch (b.type) {
     case "h2":
       return <h2 className="font-sans font-bold text-2xl mt-12 mb-3 tracking-tight">{b.text}</h2>;
+    case "h3":
+      return <h3 className="font-sans font-bold text-xl mt-8 mb-2">{b.text}</h3>;
+    case "callout":
+      return <aside className="my-8 rounded-xl bg-cream border border-neutral-200 px-5 py-4 text-[1.1rem] leading-relaxed font-sans text-neutral-800">{b.text}</aside>;
+    case "diagram": {
+      const D = diagrams[b.name];
+      return D ? <div className="lg:-mx-[90px]"><D /></div> : null;
+    }
     case "quote":
       return <blockquote className="border-l-[3px] border-ink pl-6 my-8 text-[1.6rem] leading-snug italic">{b.text}</blockquote>;
     case "ul":

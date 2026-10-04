@@ -26,21 +26,24 @@ export const projects = [
       "Verifier — runs checks and sends failures back for repair",
     ],
     stack: ["LangGraph", "LangChain", "Python", "Tool calling"],
+    post: "multi-agent-orchestration-explained",
+    postLabel: "Read: multi-agent orchestration, explained",
   },
   {
     title: "Aetheron",
     tag: "Open source",
     date: "2026",
     summary:
-      "An open-source, Perplexity-style answer engine. It takes a question, searches the web, reads and ranks the sources, and writes a grounded answer with citations you can click through and verify.",
+      "An open-source, Perplexity-style search engine. It rewrites your question, searches the live web, reads the pages and streams back an answer with inline citations you can click through and verify.",
     points: [
-      "Query understanding and rewriting",
-      "Web search plus retrieval and re-ranking",
-      "Streaming answers with inline citations",
+      "Agentic search with SearXNG instances and a DuckDuckGo fallback",
+      "Clean page extraction with Jina Reader and local keyword-scored RAG",
+      "Real-time streaming answers, private by design",
     ],
-    stack: ["RAG", "LLMs", "Vector search", "Streaming"],
+    stack: ["Next.js", "TypeScript", "Groq (Llama)", "SearXNG", "RAG"],
     link: "https://github.com/Smilin01/aetheron",
     linkLabel: "View on GitHub",
+    post: "how-answer-engines-work",
   },
   {
     title: "ResumeNova",
@@ -54,6 +57,8 @@ export const projects = [
       "Live editing and export",
     ],
     stack: ["LLMs", "LangChain", "Structured output", "React"],
+    link: "https://resumenova.in/",
+    linkLabel: "Visit ResumeNova",
   },
 ];
 

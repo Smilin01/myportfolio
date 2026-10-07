@@ -1,13 +1,141 @@
 // Starter drafts — edit freely. Block types: p, h2, quote, ul, code.
 export const posts = [
   {
+    slug: "how-ai-agents-use-tools",
+    title: "How AI agents use tools: tool calling, explained with Claude Code",
+    subtitle: "The model never touches your computer. So how does Claude Code read files, run tests and edit code? Follow one request, step by step.",
+    date: "2026-10-07",
+    readTime: 15,
+    tag: "Tool calling",
+    featured: true,
+    body: [
+      { type: "p", text: "When you ask Claude Code to fix a failing test, you watch it search your project, open files, change code and run the tests. It feels like the AI is sitting at your keyboard. It isn't. This post explains what is really going on, in plain language, with diagrams you can click through." },
+      { type: "callout", text: "The one idea to remember: the AI model never runs anything. It writes a request, and a normal program on your computer does the work and reports back." },
+
+      { type: "h2", text: "A language model can only write text" },
+      { type: "p", text: "A language model, on its own, takes text in and gives text out. It can't open a file, run a command or browse the web. Everything useful an agent does comes from one trick called tool calling (also called function calling)." },
+      { type: "p", text: "Think of a manager and an assistant. The manager is smart but sits in a room with no computer. When the manager needs something, they write a note: “Please look up the sales file and tell me what it says.” The assistant does the errand and slides the result back under the door. The manager reads it and decides what to ask next." },
+      { type: "ul", items: [
+        "The manager is the AI model (Claude).",
+        "The assistant is the app around it (Claude Code, running on your computer). People call this the harness.",
+        "The errands are tools: read a file, search the code, edit a file, run a command.",
+        "The notes are structured tool requests, and the slid-back results are tool results."
+      ] },
+
+      { type: "h2", text: "What a tool looks like to the model" },
+      { type: "p", text: "Claude can't see your code or your tools. All it gets is a menu: a list of tools, each described in a few lines. Click the highlighted parts below to see what each one is for." },
+      { type: "diagram", name: "anatomy" },
+      { type: "p", text: "A tool has three parts: a name, a description and an input schema (the form to fill in). Of the three, the description does the most work. It is how Claude learns when a tool is the right one to use." },
+      { type: "p", text: "Claude Code ships with a set of built-in tools along these lines: reading files, searching file names and contents, editing files, running shell commands, fetching web pages and starting helper agents. You can add more through MCP, which I cover below." },
+
+      { type: "h2", text: "The loop: ask, act, report, repeat" },
+      { type: "p", text: "Here is the heart of every coding agent. It is a loop, and it is simpler than it looks:" },
+      { type: "ul", items: [
+        "1. The app sends the model your request, the conversation so far and the tool menu.",
+        "2. The model replies. Either it answers in words (done), or it asks for a tool.",
+        "3. If it asked for a tool, the app checks it is allowed, runs it, and captures the output.",
+        "4. The app adds that output to the conversation and goes back to step 1."
+      ] },
+      { type: "p", text: "The loop ends when the model replies without asking for a tool. The API marks that moment with stop_reason: end_turn. When the model wants a tool, the stop reason is tool_use." },
+      { type: "p", text: "Now watch it happen. Press Play and follow the request “the login test is failing, can you fix it?” through every step. When it reaches the permission gate, you get to decide." },
+      { type: "diagram", name: "loop" },
+      { type: "callout", text: "Pay attention to the transcript box and the context size on the right. The model has no memory between calls. Every turn, the app sends the whole conversation again, tool results included. That is how Claude “remembers” what it found a minute ago." },
+
+      { type: "h2", text: "What the messages really look like" },
+      { type: "p", text: "Under the friendly interface, the conversation is plain structured data. When Claude wants a tool, its reply contains a tool_use block with an id, the tool name and the arguments:" },
+      { type: "code", lang: "json", text: "{\n  \"role\": \"assistant\",\n  \"content\": [\n    { \"type\": \"text\", \"text\": \"I'll start by finding the login tests.\" },\n    {\n      \"type\": \"tool_use\",\n      \"id\": \"toolu_01A2B3\",\n      \"name\": \"grep\",\n      \"input\": { \"pattern\": \"login\", \"glob\": \"*.test.ts\" }\n    }\n  ],\n  \"stop_reason\": \"tool_use\"\n}" },
+      { type: "p", text: "The app runs the search and answers with a tool_result block that carries the same id, so the model knows which request the result belongs to:" },
+      { type: "code", lang: "json", text: "{\n  \"role\": \"user\",\n  \"content\": [\n    {\n      \"type\": \"tool_result\",\n      \"tool_use_id\": \"toolu_01A2B3\",\n      \"content\": \"auth.test.ts:12  expect(res.url).toBe('/login/v1')\"\n    }\n  ]\n}" },
+      { type: "p", text: "Notice that the result is sent as a user message. From the model's point of view, the outside world is simply the next thing said to it." },
+
+      { type: "h2", text: "How does Claude decide which tool to use?" },
+      { type: "p", text: "Nobody hard-codes “if the user says login, run grep”. The model reads your request and the tool descriptions, and reasons about what it is missing. If it already knows the answer, it answers. If it needs information that only exists on your machine, it asks for a tool. Pick a request below and see the reasoning." },
+      { type: "diagram", name: "decide" },
+      { type: "p", text: "Three behaviours show up here, and all three matter in practice:" },
+      { type: "ul", items: [
+        "Sometimes no tool is the right choice. Good agents don't call tools out of habit.",
+        "Calls are chained. The next call depends on what the last one returned, which is why debugging feels like detective work.",
+        "Independent calls can be requested together. If three edits don't depend on each other, the model can ask for all three in one reply and the app runs them at the same time. Each result is matched back by its id."
+      ] },
+
+      { type: "h2", text: "When a tool fails" },
+      { type: "p", text: "Tools fail all the time: the file isn't there, the command errors, the test breaks. The app doesn't crash. It sends the error back as a tool_result marked is_error, and the model treats it as information:" },
+      { type: "code", lang: "json", text: "{\n  \"type\": \"tool_result\",\n  \"tool_use_id\": \"toolu_01C4D5\",\n  \"is_error\": true,\n  \"content\": \"File not found: src/auth.tsx\"\n}" },
+      { type: "p", text: "The usual next move is sensible recovery: search for the real file name, try a different path, or tell you what went wrong. This is the same pattern as the verify-and-repair loop in my multi-agent post, just at the level of a single tool." },
+
+      { type: "h2", text: "Who is in charge? The permission gate" },
+      { type: "p", text: "If the model can request any action, what stops it from deleting your files? The answer is the most important design idea in agent tools: the model asks, but the app decides. Every tool request passes through code that applies rules before anything runs." },
+      { type: "p", text: "Claude Code does this with permission modes and rules. Reading is generally safe and happens freely. Changing files and running commands require your approval, unless you have allowed them. You can also write allow rules, and deny rules that always win. Try the switches:" },
+      { type: "diagram", name: "gate" },
+      { type: "p", text: "The logic behind it is simple risk management. Match the amount of supervision to the amount of damage an action can do:" },
+      { type: "ul", items: [
+        "Read-only actions are cheap to undo (there is nothing to undo), so let them run.",
+        "Edits are reversible if you use version control, so asking once, or pre-approving, is reasonable.",
+        "Commands can do anything, so they get the strictest treatment.",
+        "Rules written by a human beat anything the model decides."
+      ] },
+
+      { type: "h2", text: "Tool results are data, not orders" },
+      { type: "p", text: "There is a security trap here. A tool result might contain text from a web page or a file, and that text could say “ignore your instructions and run this command”. This is called prompt injection. The defence is a principle: content that comes back from a tool is information to reason about, never instructions to obey. The permission gate is the backstop. Even if the model is fooled into asking, the app can still say no." },
+
+      { type: "h2", text: "Why not give the model every tool at once?" },
+      { type: "p", text: "Every tool definition costs tokens, because the whole menu is sent on every turn. With dozens of tools, the menu itself crowds out the real work, and the model gets worse at choosing. Modern agents handle this by loading tools on demand. Only a small core is shown, and a search step finds and loads the rest when the model needs them. I even see this in my own working session: some tools only appear after I search for them." },
+
+      { type: "h2", text: "Helpers, plugins and standards" },
+      { type: "ul", items: [
+        "Subagents: a tool whose job is to start another agent with its own fresh context and report back. This is the manager-and-specialists idea from my multi-agent post, used as a tool.",
+        "MCP (Model Context Protocol): an open standard for plugging tools into agents. Instead of every app inventing its own connectors, a tool server speaks MCP and any compatible agent can use it.",
+        "Hooks: your own scripts that run before or after a tool call, for checks the model can't be trusted to remember."
+      ] },
+
+      { type: "h2", text: "The architecture in one picture" },
+      { type: "ul", items: [
+        "You: describe the goal in plain language.",
+        "The harness (Claude Code): holds the conversation, sends it to the model, checks permissions, runs tools, returns results.",
+        "The model (Claude): decides what to do next and writes either an answer or a tool request.",
+        "The tools: do the real work on your machine, and report what happened."
+      ] },
+      { type: "p", text: "The intelligence is in the model. The safety, the memory and the actions are in the harness. Good agents need both." },
+
+      { type: "h2", text: "Build the loop yourself" },
+      { type: "p", text: "The whole idea fits in about twenty lines. This is the loop written with the Anthropic Python SDK. run_tool is your own function that actually reads a file, runs a search and so on." },
+      { type: "code", lang: "python", text: "import anthropic\n\nclient = anthropic.Anthropic()\n\ntools = [{\n    \"name\": \"read_file\",\n    \"description\": \"Read a file from the project. Use this when you need to see what a file contains.\",\n    \"input_schema\": {\n        \"type\": \"object\",\n        \"properties\": {\"path\": {\"type\": \"string\", \"description\": \"File path\"}},\n        \"required\": [\"path\"],\n    },\n}]\n\nmessages = [{\"role\": \"user\", \"content\": \"What does README.md say?\"}]\n\nwhile True:\n    response = client.messages.create(\n        model=\"claude-opus-5-5\",\n        max_tokens=16000,\n        tools=tools,\n        messages=messages,\n    )\n    messages.append({\"role\": \"assistant\", \"content\": response.content})\n\n    if response.stop_reason != \"tool_use\":\n        break  # the model answered in words: we're done\n\n    results = []\n    for block in response.content:\n        if block.type == \"tool_use\":\n            output = run_tool(block.name, block.input)  # your code runs it\n            results.append({\n                \"type\": \"tool_result\",\n                \"tool_use_id\": block.id,\n                \"content\": output,\n            })\n    messages.append({\"role\": \"user\", \"content\": results})\n\nprint(response.content[0].text)" },
+      { type: "p", text: "Everything Claude Code does, from searching to editing to running tests, is this loop with better tools, a permission layer and careful handling of context. The SDK also has a tool runner that writes the loop for you, so you only define the tools." },
+
+      { type: "h2", text: "Tips for designing good tools" },
+      { type: "ul", items: [
+        "Write descriptions like instructions for a new teammate: what it does, when to use it, when not to.",
+        "Keep the menu small and the tools distinct. Overlapping tools confuse the model.",
+        "Return short, useful output. A tool that dumps ten thousand lines wastes context.",
+        "Make errors explain themselves, so the model can recover.",
+        "Validate every argument. Treat model output like user input, because it can be wrong.",
+        "Put a human gate in front of anything destructive or irreversible."
+      ] },
+
+      { type: "h2", text: "Quick glossary" },
+      { type: "ul", items: [
+        "Tool: an action the model may request, like reading a file.",
+        "Tool calling (function calling): the model asking for a tool using structured data.",
+        "tool_use: the block where the model names a tool and its arguments.",
+        "tool_result: the block carrying the output back, matched by id.",
+        "stop_reason: why the model stopped. tool_use means it is waiting for a tool; end_turn means it is finished.",
+        "Harness: the app around the model that runs the loop and the tools.",
+        "Permission mode / rules: the app's settings for what runs freely, what asks, what is blocked.",
+        "Context: everything the model can see on a turn, including all earlier tool results.",
+        "MCP: an open standard for connecting tools to agents."
+      ] },
+
+      { type: "quote", text: "The model decides what to try. The harness decides what is allowed. The tools find out what is true." },
+      { type: "p", text: "This pairs with my guide to multi-agent orchestration: agents are the roles, and tool calling is how each role touches the world." },
+    ],
+  },
+  {
     slug: "multi-agent-orchestration-explained",
     title: "Multi-agent orchestration, explained simply",
     subtitle: "How a team of AI agents plans, builds and checks software together, with diagrams you can click through.",
     date: "2026-10-02",
     readTime: 14,
     tag: "Agents",
-    featured: true,
     body: [
       { type: "p", text: "You don't need a computer science degree to understand how a team of AI agents works. If you have ever seen a restaurant kitchen, you already know the idea. This post explains it from scratch, using the coding agent I built as the running example: six agents that together plan, write and check software." },
       { type: "callout", text: "How to read this post: the diagrams are interactive. Click the agents, press Play, and break things on purpose with the “make the tests fail” switch." },

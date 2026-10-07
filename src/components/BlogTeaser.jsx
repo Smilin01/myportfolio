@@ -11,7 +11,7 @@ export default function BlogTeaser() {
           <Link to="/blog" className="text-leaf hover:underline underline-offset-4">All stories →</Link>
         </Reveal>
         <div className="divide-y divide-neutral-200 max-w-3xl">
-          {posts.map((p) => (
+          {posts.slice(0, 3).map((p) => (
             <Reveal key={p.slug}>
               <Link to={`/blog/${p.slug}`} className="block py-7 group">
                 <p className="text-sm text-neutral-500">{p.tag} · {formatDate(p.date)} · {p.readTime} min read</p>
